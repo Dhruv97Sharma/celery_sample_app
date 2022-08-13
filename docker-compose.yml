@@ -1,0 +1,26 @@
+version: "2.5"
+services:
+  rabbitmq:
+    image: rabbitmq:3.8.17-management
+    hostname: 'rabbit'
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest
+    ports:
+      - "15672:15672"
+
+  redis:
+    image: redis:latest
+    ports:
+      - "6379:6379"
+
+
+  python-backend-app:
+    container_name: python-backend-app
+    build: ./deploy/python-backend-app
+    volumes:
+      - ./deploy/python-backend-app:/app
+    ports:
+      - 8000:8000
+    stdin_open: true
+    tty: true
